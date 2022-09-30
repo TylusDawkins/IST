@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+.h1 {
+  font-size: 48px;
+  line-height: 1.2x;
+}
+h2,
+.h2 {
+  font-size: 40px;
+}
+h3,
+.h3 {
+  font-size: 32px;
+}
+
+h4,
+.h4 {
+  font-size: 24px;
+}
+
+p {
+}
+
+nav {
+  background-color: #ffd000;
+}
+
+a {
+  @apply text-blue-600 underline;
+}
+
+body {
+  position: relative;
+  padding-bottom: 65px;
+}
+
+nav a {
+  text-decoration: none;
+}
+
+.footer {
+  margin-top: 1rem;
+  padding: 1rem;
+  color: white;
+  background-color: rgb(12, 74, 110);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* homepage dashboard */
+/* .main {
+  display: grid;
+  grid-auto-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+} */
+
+header .sales-tracker {
+  font-weight: 700;
+}
+
+.dash-date {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono";
+}
+
+.totals,
+.closing-ratio,
+.dash-date,
+.result-title,
+.bar-title,
+.sales-tracker,
+.welcome {
+  align-self: center;
+  justify-self: center;
+}
+
+.totalpolicies,
+.totalpremiums,
+.cr-title,
+.ratio,
+.date,
+.quarter,
+.result-title,
+.bar-title,
+.sales-tracker,
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.contact-table {
+  justify-self: center;
+}
+
+.stat,
+.total-stats {
+  display: block;
+  padding: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+  line-height: 1.5px;
+  text-align: center;
+}
+
+.barchart,
+.closing-ratio,
+.piechart,
+.totals,
+.contact-table {
+  border-radius: 30px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.piechart:hover,
+.closing-ratio:hover,
+.barchart:hover,
+.totals:hover,
+.contact-table:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
