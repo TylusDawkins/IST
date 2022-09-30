@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Sales Tracker",
+  "name": "Individual Sales Tracker",
   "icons": [
     {
       "src": "favicon.ico",
@@ -16,6 +16,11 @@
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "liberty-logo.jpg",
+      "type": "image/jpg",
+      "sizes": "192x192"
     }
   ],
   "start_url": ".",
