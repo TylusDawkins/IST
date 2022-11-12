@@ -17,6 +17,16 @@ function Dashboard() {
 
 
   // Nouns
+
+  const threeMos = new Date();
+  threeMos.setMonth(threeMos.getMonth() - 3);
+
+  const sixMos = new Date();
+  sixMos.setMonth(sixMos.getMonth() - 6);
+
+  const twelveMos = new Date();
+  twelveMos.setMonth(twelveMos.getMonth() - 12);
+
   const dateInfo = useContext(DateContext);
   const userInfo = useContext(UserContext);
 
@@ -102,7 +112,87 @@ function Dashboard() {
     }
   ]
 
-  const [calls, setCalls] = useState(Sales)
+  // This came from Stack overflow 
+  // https://stackoverflow.com/questions/31378526/generate-random-date-between-two-dates-and-times-in-javascript
+
+  const getDate = (date1, date2) => {
+    const options = {year:'numeric', month:'numeric',day:'numeric'}
+    function randomValueBetween(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+    date1 = date1 || '01-01-1970'
+    date2 = date2 || new Date().toLocaleDateString()
+    date1 = new Date(date1).getTime()
+    date2 = new Date(date2).getTime()
+
+    // const ret = new Date(randomValueBetween(date1,date2))
+    // console.log(ret.getFullYear())
+    // console.log(ret.getMonth())
+    // console.log(ret.getDay())
+    
+    if( date1>date2){
+      const ret = new Date(randomValueBetween(date2,date1)) 
+      const year = ret.getFullYear()
+      const month = ret.getMonth()>=9? ret.getMonth()+1:`0${ret.getMonth()+1}`
+      const day = ret.getDay()>=10? ret.getDay()+1:`0${ret.getDay()+1}`
+        return  `${year}-${month}-${day}`
+    } else{
+      const ret = new Date(randomValueBetween(date1, date2))
+      const year = ret.getFullYear()
+      const month = ret.getMonth()>=9? ret.getMonth()+1:`0${ret.getMonth()+1}`
+      const day = ret.getDay()>=9? ret.getDay()+1:`0${ret.getDay()+1}`
+        return `${year}-${month}-${day}`
+
+    }
+}
+
+  const getPolType = () => {
+    const type_random = Math.floor(Math.random())
+    if(type_random === 0){
+      return "Auto"
+    } else if(type_random===1){
+      return "Home"
+    }
+  }
+
+  const getResult = () => {
+    const result_random = Math.floor(Math.random() * 4)
+    if(result_random === 0){
+      return "CC"
+    } else if(result_random === 1){
+      return "DCL"
+    } else if(result_random ===2){
+      return "INC"
+    } else {return "QNF"}
+  }
+
+  const createCalls = () => {
+    let arr = []
+    for(let i=0; i<=850; i++){
+      const type_random = Math.floor(Math.random() * 4)
+      const contact_date = getDate(twelveMos,new Date().toLocaleDateString())
+      const effective_date = getDate(contact_date, new Date().toLocaleDateString())
+
+      const obj = {
+        policy_number: 1000+i,
+        policy_type: getPolType(),
+        premium :Math.floor(Math.random() * 1200+400),
+        result: getResult(),
+        reason: null,
+        contactDate:contact_date,
+        effectiveDate:effective_date
+      }
+      arr.push(obj)
+
+    }
+    return arr
+  }
+  // const [calls, setCalls] = useState(createCalls())
+
+  const [calls, setCalls] = useState(createCalls())
+
+  console.log(createCalls())
+  console.log(Sales)
 
   const [callResults, setcallResults] = useState(results)
 
@@ -145,15 +235,6 @@ function Dashboard() {
       },
     ],
   });
-
-  const threeMos = new Date();
-  threeMos.setMonth(threeMos.getMonth() - 3);
-
-  const sixMos = new Date();
-  sixMos.setMonth(sixMos.getMonth() - 6);
-
-  const twelveMos = new Date();
-  twelveMos.setMonth(twelveMos.getMonth() - 12);
 
 // Verbs
 
@@ -251,9 +332,12 @@ function Dashboard() {
   useEffect(() => {
     calls.map((item) => {
       if((isAfter(parseISO(item.effectiveDate), twelveMos) === true)) {
+        console.log(true)
           filteredDates.push(item)
       }
     })
+    console.log(filteredDates)
+    console.log(calls.filter(item => isAfter(parseISO(item.effectiveDate), twelveMos) === false))
     filteredSales = (filteredDates.filter(call => call.result === "CC"))
     setTotalPoliciesSold(filteredSales.length)
     setTotalPremiumSold(handlePremiumSold())
@@ -278,13 +362,15 @@ const incrementMonths = () =>{
   let forMonths = monthsList
   for(let i=0; i < filteredSales.length; i++) {
   let curmonth = new Date(filteredSales[i].effectiveDate).getMonth()
-  forMonths[curmonth+1].value +=1
+  forMonths[curmonth].value +=1
   }
   setMonthSales(forMonths)
 }
 
 const handlePoliciesSold = (e) => {
+  console.log('hi')
   calls.map((item) => {
+    console.log(isAfter(parseISO(item.effectiveDate), threeMos))
     if (e.target.value === "3" && (isAfter(parseISO(item.effectiveDate), threeMos) === true)){
       filteredDates.push(item)
     } else if (e.target.value === "6" && (isAfter(parseISO(item.effectiveDate), sixMos) === true)){

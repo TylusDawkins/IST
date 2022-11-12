@@ -2,7 +2,7 @@ export const Sales = [
     {
       policy_number: 10000,
       policy_type: "Auto",
-      premium: 976,
+      premium: 371,
       result: "CC",
       reason: null,
       contactDate: "2022-04-26", 
