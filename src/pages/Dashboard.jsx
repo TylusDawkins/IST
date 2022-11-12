@@ -126,9 +126,6 @@ function Dashboard() {
     date2 = new Date(date2).getTime()
 
     // const ret = new Date(randomValueBetween(date1,date2))
-    // console.log(ret.getFullYear())
-    // console.log(ret.getMonth())
-    // console.log(ret.getDay())
     
     if( date1>date2){
       const ret = new Date(randomValueBetween(date2,date1)) 
@@ -187,12 +184,8 @@ function Dashboard() {
     }
     return arr
   }
-  // const [calls, setCalls] = useState(createCalls())
 
   const [calls, setCalls] = useState(createCalls())
-
-  console.log(createCalls())
-  console.log(Sales)
 
   const [callResults, setcallResults] = useState(results)
 
@@ -332,12 +325,9 @@ function Dashboard() {
   useEffect(() => {
     calls.map((item) => {
       if((isAfter(parseISO(item.effectiveDate), twelveMos) === true)) {
-        console.log(true)
           filteredDates.push(item)
       }
     })
-    console.log(filteredDates)
-    console.log(calls.filter(item => isAfter(parseISO(item.effectiveDate), twelveMos) === false))
     filteredSales = (filteredDates.filter(call => call.result === "CC"))
     setTotalPoliciesSold(filteredSales.length)
     setTotalPremiumSold(handlePremiumSold())
@@ -368,9 +358,7 @@ const incrementMonths = () =>{
 }
 
 const handlePoliciesSold = (e) => {
-  console.log('hi')
   calls.map((item) => {
-    console.log(isAfter(parseISO(item.effectiveDate), threeMos))
     if (e.target.value === "3" && (isAfter(parseISO(item.effectiveDate), threeMos) === true)){
       filteredDates.push(item)
     } else if (e.target.value === "6" && (isAfter(parseISO(item.effectiveDate), sixMos) === true)){
