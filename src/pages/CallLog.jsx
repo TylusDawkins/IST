@@ -5,10 +5,10 @@ import axios from 'axios'
 import { Sales } from "../util/Sales"
 
 
-function CallLog() {
+function CallLog({calls}) {
     const headers = ["Policy #", "Type", "Contact Date", "Effective Date","Premium","Result","Reason"]
 
-    const [callInfo, setCallInfo] = useState(Sales);
+    const [callInfo, setCallInfo] = useState(calls);
     const [error, setError] = useState(null);
     const [stringDataState, setStringDataState] = useState("");
 

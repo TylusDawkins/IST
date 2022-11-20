@@ -10,7 +10,7 @@ function Profile(){
 
     
     return (
-        <div className='text-center align-middle mt-52 text-9xl'>WIP</div>
+        <div className='text-center align-middle mt-52 text-4xl'>This was an important page to a hackathon, but since losing the backend this feature has been deprecated for the time being. If I want to come back to make a full website out of this rather than a portfolio piece I'll come back to this page.</div>
         // <div className="profile container m-5">
         //     <div>
         //         <h2 className="m-9 pt-3">Profile Page</h2>

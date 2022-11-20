@@ -6,6 +6,7 @@ import { MonthsData } from "../util/Data"
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "./../components/context/UserContext";
 import { DateContext } from "./../components/context/DateContext";
+import { CallContext } from "../components/context/CallContext";
 import { isAfter, parseISO, getMonth } from "date-fns";
 import { DateData } from "../util/Dates";
 import Table from "../components/Table";
@@ -13,7 +14,7 @@ import DashTable from "../components/DashTable"
 import axios from "axios";
 import DashTotals from "../components/DashTotals";
 
-function Dashboard() {
+function Dashboard({calls, setCalls}) {
 
 
   // Nouns
@@ -29,6 +30,8 @@ function Dashboard() {
 
   const dateInfo = useContext(DateContext);
   const userInfo = useContext(UserContext);
+  const [callsContext, setCallsContext] = useContext(CallContext)
+
 
   const [totalPoliciesSold, setTotalPoliciesSold] = useState(0)
 
@@ -111,81 +114,6 @@ function Dashboard() {
       value:0
     }
   ]
-
-  // This came from Stack overflow 
-  // https://stackoverflow.com/questions/31378526/generate-random-date-between-two-dates-and-times-in-javascript
-
-  const getDate = (date1, date2) => {
-    const options = {year:'numeric', month:'numeric',day:'numeric'}
-    function randomValueBetween(min, max) {
-      return Math.random() * (max - min) + min;
-    }
-    date1 = date1 || '01-01-1970'
-    date2 = date2 || new Date().toLocaleDateString()
-    date1 = new Date(date1).getTime()
-    date2 = new Date(date2).getTime()
-
-    // const ret = new Date(randomValueBetween(date1,date2))
-    
-    if( date1>date2){
-      const ret = new Date(randomValueBetween(date2,date1)) 
-      const year = ret.getFullYear()
-      const month = ret.getMonth()>=9? ret.getMonth()+1:`0${ret.getMonth()+1}`
-      const day = ret.getDay()>=10? ret.getDay()+1:`0${ret.getDay()+1}`
-        return  `${year}-${month}-${day}`
-    } else{
-      const ret = new Date(randomValueBetween(date1, date2))
-      const year = ret.getFullYear()
-      const month = ret.getMonth()>=9? ret.getMonth()+1:`0${ret.getMonth()+1}`
-      const day = ret.getDay()>=9? ret.getDay()+1:`0${ret.getDay()+1}`
-        return `${year}-${month}-${day}`
-
-    }
-}
-
-  const getPolType = () => {
-    const type_random = Math.floor(Math.random())
-    if(type_random === 0){
-      return "Auto"
-    } else if(type_random===1){
-      return "Home"
-    }
-  }
-
-  const getResult = () => {
-    const result_random = Math.floor(Math.random() * 4)
-    if(result_random === 0){
-      return "CC"
-    } else if(result_random === 1){
-      return "DCL"
-    } else if(result_random ===2){
-      return "INC"
-    } else {return "QNF"}
-  }
-
-  const createCalls = () => {
-    let arr = []
-    for(let i=0; i<=850; i++){
-      const type_random = Math.floor(Math.random() * 4)
-      const contact_date = getDate(twelveMos,new Date().toLocaleDateString())
-      const effective_date = getDate(contact_date, new Date().toLocaleDateString())
-
-      const obj = {
-        policy_number: 1000+i,
-        policy_type: getPolType(),
-        premium :Math.floor(Math.random() * 1200+400),
-        result: getResult(),
-        reason: null,
-        contactDate:contact_date,
-        effectiveDate:effective_date
-      }
-      arr.push(obj)
-
-    }
-    return arr
-  }
-
-  const [calls, setCalls] = useState(createCalls())
 
   const [callResults, setcallResults] = useState(results)
 
@@ -394,13 +322,12 @@ const handleClick = (e) => {
     incrementResults()
     updateResultsChart()
 }
-
     return calls ?(
       <>
       <div className="p-5 grid-container">
         <header className="flex items-center justify-center grid grid-cols-9 gap-4 pb-3">
           <h1 className="sales-tracker text-3xl col-span-3">Sales Metrics Tracker</h1>
-          <span className="h4 welcome text-md p-3 col-span-3 items-center justify-center">Happy {dateInfo.weekday}, {userInfo.firstname}!</span>
+          <span className="h4 welcome text-md p-3 col-span-3 items-center justify-center">Happy {dateInfo.weekday}!</span>
           <div className="col-span-3 align-center justify-center dash-date">
             <span className="date">{dateInfo.date}</span>
             <span className="quarter">{dateInfo.quarter}</span>
